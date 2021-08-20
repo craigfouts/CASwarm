@@ -11,8 +11,8 @@ def update(i, x, ax):
         y = np.zeros(shape=x.shape)
         for idx, _ in np.ndenumerate(x):
             n = 0
-            for x_shift, y_shift in zip([-1, 0, 1, -1, 1, -1, 0, 1],
-                                        [1, 1, 1, 0, 0, 0, -1, -1, -1]):
+            for x_shift, y_shift in zip([-1,  0,  1, -1,  1, -1,  0,  1],
+                                        [ 1,  1,  1,  0,  0, -1, -1, -1]):
                 target = ((idx[0] + x_shift) % x.shape[1],
                           (idx[1] + y_shift) % x.shape[0])
                 if x[target] > 0:
@@ -29,7 +29,7 @@ def create_animation(update, x, figsize=(6, 6), frames=100, interval=500, save=N
                                    fargs=(x, ax), frames=frames,
                                    interval=interval, blit=True)
     if save:
-        anim.save(save, writer=animation.PillowWriter(fps=1))
+        anim.save(save, writer=animation.PillowWriter(fps=2))
     return HTML(anim.to_jshtml())
 
 
