@@ -1,20 +1,33 @@
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
-from typing import Iterable
+from IPython.display import HTML
 
 
 class Swarm:
 
     def __init__(self, grid, controller):
         self.grid = grid
-        self.controller = controller
+        self.controller = controller(grid)
 
     def run(self):
-        fig, ax = plt.subplots(self.figsize)
-        anim = animation.FuncAnimation(fig, )
+        fig, ax = plt.subplots(6, 6)
+        anim = animation.FuncAnimation(fig,
+                                       self.controller.update,
+                                       fargs=(self.grid, ax),
+                                       frames=100,
+                                       interval=500,
+                                       blit=True)
+        return HTML(anim.to_jshtml())
 
-    def save(fmt='.gif'):
-        pass
+    def save(self, fname, fmt='.gif') -> None:
+        fig, ax = plt.subplots(6, 6)
+        anim = animation.FuncAnimation(fig,
+                                       self.controller.update,
+                                       fargs=(self.grid, ax),
+                                       frames=100,
+                                       interval=500,
+                                       blit=True)
+        anim.save(fname + fmt, writer=animation.PillowWriter(fps=2))
 
 
 class Controller:
@@ -22,8 +35,5 @@ class Controller:
     def __init__(self, grid):
         self.grid = grid
 
-    def perceive():
-        pass
-
-    def update():
+    def update(i):
         pass
